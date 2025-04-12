@@ -40,11 +40,9 @@ export default function DeviceControl({ isLandscape: isLandscapeProp }: DeviceCo
   const [sensorData, setSensorData] = useState({ left: 0, center: 0, right: 0 });
 
   const wsManager = useWebSocketManager();
-
   const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
   const isLandscape = isLandscapeProp || screenWidth > screenHeight;
   const styles = createAdaptiveStyles(isLandscape, screenWidth, screenHeight);
-
   const slideAnim = useState(new Animated.Value(0))[0];
 
   useEffect(() => {
@@ -255,26 +253,28 @@ export default function DeviceControl({ isLandscape: isLandscapeProp }: DeviceCo
           </Animated.View>
         </View>
 
-        <TouchableOpacity 
+        {/* Botón Equipo */}
+        <TouchableOpacity
           style={[
             styles.teamButton,
             {
-              bottom: isLandscape ? 16 : 24,
+              bottom: isLandscape ? 80 : 90,
               right: isLandscape ? 16 : 24
             }
           ]}
           onPress={() => setShowTeamMembers(true)}
         >
           <Users width={20} height={20} color="#FFFFFF" />
-          <Text style={styles.teamButtonText}>Equipo</Text>
+          <Text style={styles.teamButtonText}>Informacion</Text>
         </TouchableOpacity>
 
-        {/* <TouchableOpacity 
+        {/* ✅ Botón Materiales */}
+        {/* <TouchableOpacity
           style={[
             styles.materialsButton,
             {
               bottom: isLandscape ? 16 : 24,
-              left: isLandscape ? 16 : 24
+              right: isLandscape ? 16 : 24
             }
           ]}
           onPress={() => setShowMaterials(true)}
@@ -283,19 +283,12 @@ export default function DeviceControl({ isLandscape: isLandscapeProp }: DeviceCo
           <Text style={styles.materialsButtonText}>Materiales</Text>
         </TouchableOpacity> */}
 
-        <Modal
-          visible={showTeamMembers}
-          animationType="slide"
-          onRequestClose={() => setShowTeamMembers(false)}
-        >
+        {/* Modales */}
+        <Modal visible={showTeamMembers} animationType="slide" onRequestClose={() => setShowTeamMembers(false)}>
           <TeamMembers onClose={() => setShowTeamMembers(false)} />
         </Modal>
 
-        <Modal
-          visible={showMaterials}
-          animationType="slide"
-          onRequestClose={() => setShowMaterials(false)}
-        >
+        <Modal visible={showMaterials} animationType="slide" onRequestClose={() => setShowMaterials(false)}>
           <Materials onClose={() => setShowMaterials(false)} />
         </Modal>
 
